@@ -51,7 +51,7 @@ export class ProductListComponent implements OnInit, OnDestroy{
 
   performFilter(filterBy: string) : IProduct[]{
       filterBy = filterBy.toLowerCase();
-      return this.productsList.filter(product => product.name.toLowerCase().includes(filterBy));
+      return this.productsList.filter(product => product.name ?? ''.toLowerCase().includes(filterBy));
   }
 
   onClickedRating(message: string){

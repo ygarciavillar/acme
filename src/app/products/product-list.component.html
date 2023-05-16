@@ -28,6 +28,7 @@
           <th>Available</th>
           <th>Price</th>
           <th>5 Star Rating</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -35,18 +36,19 @@
           <td>
             <img *ngIf="shownImage" 
             [src]="product.imageUrl" 
-            [title]="product.name"
+            [title]="product.name ?? ''"
             [style.width.px]="imageWidth"
             [style.margin.px]="imageMargin"
             />
           </td>
           <td>
-            <a [routerLink]="['/products', product.id]">{{product.name }}</a>
+            <a [routerLink]="['/products', product.id]">{{product.name ?? '' }}</a>
           </td>
-          <td>{{product.code| lowercase | convertToSpaces: '-' }}</td>
+          <td>{{product.code ?? '' | lowercase | convertToSpaces: '-' }}</td>
           <td>{{product.releaseDate}}</td>
           <td>{{product.price | currency:'USD':'symbol':'1.2-2' }}</td>
-          <td><pm-start [rating]="product.rating" (clickedRating)="onClickedRating($event)"></pm-start></td>
+          <td><pm-start [rating]="product.rating ?? 0" (clickedRating)="onClickedRating($event)"></pm-start></td>
+          <td><a class="btn btn-sm btn-outline-primary" [routerLink]="['/products', product.id, 'edit']">Edit</a></td>
         </tr>
       </tbody>
     </table>

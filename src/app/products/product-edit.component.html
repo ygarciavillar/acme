@@ -1,0 +1,187 @@
+<div class="card">
+  <div class="card-header">
+    {{ pageTitle}}
+  </div>
+
+  <div class="card-body">
+    <form novalidate [formGroup]="productForm" (ngSubmit)="saveProduct()">
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" 
+               for="productName">
+            Product Name
+        </label>
+
+        <div class="col-md-8"> 
+          <input class= 'form-control' 
+                  type="text" 
+                  id="productName"
+                  placeholder="Name (required)"
+                 formControlName = "name"
+                 [ngClass]="{ 'is-invalid' : displayMessage['name']}"
+          />
+          <span class="invalid-feedback">
+            {{displayMessage['name']}}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" 
+               for="productCode">
+            Product Code
+        </label>
+        <div class="col-md-8"> 
+          <input class= 'form-control' 
+                  type="text" 
+                  id="productCode"
+                  placeholder="Code (required)"
+                 formControlName = "code"
+                 [ngClass]="{ 'is-invalid' : displayMessage['code'] }"
+          />
+          <span class="invalid-feedback">
+            {{ displayMessage['code'] }}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" 
+               for="releaseDate">
+            Release Date
+        </label>
+        <div class="col-md-8"> 
+          <input class= 'form-control' 
+                  type="date" 
+                  id="releaseDate"
+                  placeholder="Release Date (required)"
+                 formControlName = "releaseDate"
+          />
+        </div>
+      </div>
+
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" 
+               for="productPrice">
+            Price
+        </label>
+        <div class="col-md-8"> 
+          <input class= 'form-control' 
+                  type="number" 
+                  id="productPrice"
+                  placeholder="Price (required)"
+                 formControlName = "price"
+                 [ngClass]="{ 'is-invalid' : displayMessage['price'] }"
+                 
+          />
+          <span class="invalid-feedback">
+            {{ displayMessage['price'] }}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" 
+               for="productRating">
+            Rating
+        </label>
+        <div class="col-md-8"> 
+          <input class= 'form-control' 
+                  type="number" 
+                  id="productRating"
+                  placeholder="Rating (1 to 5)"
+                 formControlName = "rating"
+                 [ngClass]="{ 'is-invalid' : displayMessage['rating']}"
+          />
+          <span class="invalid-feedback">
+            {{displayMessage['rating']}}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" 
+               for="productImage">
+            Image Url
+        </label>
+        <div class="col-md-8"> 
+          <input class= 'form-control' 
+                  type="url" 
+                  id="productImage"
+                 formControlName = "imageUrl"
+          />
+        </div>
+      </div>
+
+      <div formArrayName="tags">
+          <div class="form-group row mb-2" 
+                *ngFor="let tag of tags.controls; let i = index">
+            <label class="col-md-2 col-form-label" attr.for="{{'tag' + i}}">
+              Tag
+            </label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" id="{{'tag' + i}}"[formControlName]="i"/>
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-outline-warning" (click)="deleteTag(i)">Delete Tag</button>
+            </div>
+          </div>
+      </div>
+      
+       <div class="row">
+        <div class="col-md-2 mb-2">
+          <button class="btn btn-outline-secondary btn-sm" 
+                   type="button"
+                    title="Add a search tag"
+                   (click)="addTag()">Add Tag
+          </button>
+        </div>
+      </div>
+       
+      
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" 
+               for="productDescription">
+            Description
+        </label>
+        <div class="col-md-8"> 
+          <textarea class= 'form-control'  
+                    id="productDescription"
+                    placeholder="Description" 
+                    formControlName = "description">
+          </textarea>
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <div class="offset-md-2 col-md-4">
+          <button class="btn btn-primary me-3"
+                  style="width:80px;"
+                  type="submit"
+                  [title]="productForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
+                  [disabled]="!productForm.valid">
+            Save
+          </button>
+          <button class="btn btn-outline-secondary me-3"
+                  style="width:80px;"
+                  type="button"
+                  title="Cancel your edits"
+                  [routerLink]="['/products']">
+            Cancel
+          </button>
+          <button class="btn btn-outline-warning"
+                  style="width:80px"
+                  type="button"
+                  title="Delete this product"
+                  (click)="deleteProduct()">
+            Delete
+          </button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+</div>
+
+<pre>{{productForm.value | json}}</pre>

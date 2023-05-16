@@ -1,55 +1,69 @@
-<div class='card'>
+<div class='card mt-5'>
   <div class='card-header'>
     {{pageTitle + ': ' + product?.name}}
   </div>
 
-  <div class='card-body'
-       *ngIf='product'>
-    <div class='row'>
-      <div class='col-md-8'>
-        <div class='row'>
-          <div class='col-md-4'>Name:</div>
-          <div class='col-md-8'>{{product.name}}</div>
-        </div>
-        <div class='row'>
-          <div class='col-md-4'>Code:</div>
-          <div class='col-md-8'>{{product.code | lowercase | convertToSpaces: '-'}}</div>
-        </div>
-        <div class='row'>
-          <div class='col-md-4'>Description:</div>
-          <div class='col-md-8'>{{product.description}}</div>
-        </div>
-        <div class='row'>
-          <div class='col-md-4'>Availability:</div>
-          <div class='col-md-8'>{{product.releaseDate}}</div>
-        </div>
-        <div class='row'>
-          <div class='col-md-4'>Price:</div>
-          <div class='col-md-8'>{{product.price|currency:'USD':'symbol'}}</div>
-        </div>
-        <div class='row'>
-          <div class='col-md-4'>5 Star Rating:</div>
-          <div class='col-md-8'>
-            <pm-start [rating]="product.rating"></pm-start>
+  <div *ngIf='product'>
+    <div class='card-body'>
+      <div class='row'>
+        <div class='col-md-8'>
+          <div class='row'>
+            <div class='col-md-4'>Name:</div>
+            <div class='col-md-8'>{{product.name}}</div>
+          </div>
+          <div class='row'>
+            <div class='col-md-4'>Code:</div>
+            <div class='col-md-8'>{{product.code ?? '' | lowercase | convertToSpaces: '-'}}</div>
+          </div>
+          <div class='row'>
+            <div class='col-md-4'>Description:</div>
+            <div class='col-md-8'>{{product.description}}</div>
+          </div>
+          <div class='row'>
+            <div class='col-md-4'>Availability:</div>
+            <div class='col-md-8'>{{product.releaseDate}}</div>
+          </div>
+          <div class='row'>
+            <div class='col-md-4'>Price:</div>
+            <div class='col-md-8'>{{product.price|currency:'USD':'symbol'}}</div>
+          </div>
+          <div class='row'>
+            <div class='col-md-4'>5 Star Rating:</div>
+            <div class='col-md-8'>
+              <pm-start [rating]="product.rating ?? 0"></pm-start>
+            </div>
+          </div>
+
+          <div class="row" *ngIf="product.tags">
+            <div class="col-md-4">Tags:</div>
+            <div class="col-md-8">
+               <span *ngFor="let tag of product.tags" 
+                      class="badge text-bg-info me-1">{{tag | titlecase}}
+                </span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class='col-md-4'>
-        <img class='center-block img-responsive'
-             [style.width.px]='200'
-             [style.margin.px]='2'
-             [src]='product.imageUrl'
-             [title]='product.name'>
+        <div class='col-md-4'>
+          <img class='center-block img-responsive'
+              [style.width.px]='200'
+              [style.margin.px]='2'
+              [src]='product.imageUrl'
+              [title]='product.name'>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class='card-footer'>
-    <button class='btn btn-outline-secondary'
-            style='width:80px'
-            (click)='onBack()'>
-      <i class='fa fa-chevron-left'></i> Back
-    </button>
+    <div class='card-footer'>
+      <button class='btn btn-outline-secondary'
+              style='width:80px'
+              (click)='onBack()'>
+        <i class='fa fa-chevron-left'></i> Back
+      </button>
+
+      <a class='btn btn-outline-primary ms-3' style='width:80px' [routerLink]="['/products', product.id, 'edit']">
+       <i class="fa fa-pen"></i> Edit
+      </a>
+    </div>
   </div>
 </div>
